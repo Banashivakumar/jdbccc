@@ -1,5 +1,7 @@
 package com.xworkz.socialmedia.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,7 +48,7 @@ public class SocialMediaDAOImpl implements SocialMediaDAO {
 			dto = (SocialMediaDTO) query.uniqueResult();
 			System.out.println(dto.getAppName());
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 		
 		return dto;
@@ -81,6 +83,35 @@ public class SocialMediaDAOImpl implements SocialMediaDAO {
 		
 		return dto;
 		}
+
+	@Override
+	public SocialMediaDTO getByRatings(double ratings) {
+		
+		try(Session sesion = sessionfactory.openSession();){
+				Query<SocialMediaDTO> query = sesion.createNamedQuery("fetchByRatings");
+				return query.uniqueResult();
+		}catch(HibernateException e){
+			e.printStackTrace();
+		}
+				 
+		
+		return null;
+	}
+
+	@Override
+	public List<SocialMediaDTO> getAll() {
+		String hql = "select social from SocialMediaDTO social";
+		List<SocialMediaDTO> dtos = null;
+		try(Session session = sessionfactory.openSession();){
+			Query<SocialMediaDTO> query = session.createQuery(hql);
+			dtos = query.list();
+		}catch(HibernateException e) {
+		e.printStackTrace();	
+		}
+		return dtos;
+	}
+
+		
 	}
 
 

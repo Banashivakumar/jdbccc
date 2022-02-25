@@ -3,13 +3,24 @@ package com.xworkz.socialmedia.dto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "social_media")
-@NamedQuery(name = "fetchByRevenue",
-                  query = "select social from SocialMediaDTO as social where social.revenue = 4.56")
+@NamedQueries(value = {
+		@NamedQuery(name ="fetchByRevenue",
+                query="select social from SocialMediaDTO as social "+" where social.revenue =4.56")
+		,@NamedQuery(name ="fetchByAppName",
+		        query="select social from SocialMediaDTO as social "
+                +"where social.appName='instagram'")
+		,@NamedQuery(name ="fetchByRatings",
+		        query ="select social from SocialMediaDTO as social "
+                +"where social.ratings=4.5")
+		,@NamedQuery(name ="fetchByAllValues",
+		         query="select social from SocialMediaDTO as social ")		
+})
 
 public class SocialMediaDTO {
 	@Id
